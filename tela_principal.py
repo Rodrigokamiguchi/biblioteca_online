@@ -4,14 +4,16 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
-class TelaPrincipal(BoxLayout):
+class TelaPrincipal(Screen):
     """Tela Principal do Aplicativo"""
 
     def __init__(self, **kwargs):
-        super().__init__(orientation="vertical", padding=20, spacing=10, **kwargs)
+        super().__init__(**kwargs)
+
+        layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
 
         # Adiciona o titulo da tela
-        self.add_widget(Label(
+        layout.add_widget(Label(
             text="📚 Biblioteca Online",
             font_size=32,
             bold=True,
@@ -27,24 +29,20 @@ class TelaPrincipal(BoxLayout):
         ]
 
         #Criação dinamica dos botões
-        for texto, funcao in botoes:
+        for texto, nome_tela in botoes:
             btn = Button(
                 text = texto,
                 size_hint=(1, 0.2),
                 font_size=20
             )
-            btn.bind(on_press=funcao) # Associa a função do botão
-            self.add_widget(btn)
+            btn.bind(
+                on_press=lambda instance,
+                t=nome_tela: self.mudartela(t)
+            )
+            layout.add_widget(btn)
+        self.add_widget(btn)
 
-    #Metodos chados do pressionar os botões
-    def adicionar_livro(self, instance):
-        print("Ação: Adicionar livro")
+    def mudar_tela(self, nome_tela):
+        """Alterna para a tela desejada"""
 
-    def emprestar_livro(self, instance):
-        print("Ação: Emprestar livro")
-
-    def devolver_livro(self, instance):
-        print("Ação: Devolver livro")
-    
-    def relatorios(self, instance):
-        print("Ação: Ver Relatorios")
+        self.manager.current = nome_tela
