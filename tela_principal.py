@@ -21,28 +21,13 @@ class TelaPrincipal(Screen):
         ))
 
         #Lista de botões e suas funções associados
-        botoes = [
-            ("Adicionar Livro", self.adicionar_livro),
-            ("Emprestar Livro", self.emprestar_livro),
-            ("Devolver Livro", self.devolver_livro),
-            ("Relatorios", self.relatorios)
-        ]
+        btn_adicionar = Button(text="Adicionar Livro", size_hint=(0, 0.2), font_size=20)
+        btn_adicionar.bind(on_press=self.adicionar_livros)
+        layout.add_widget(btn_adicionar)
 
-        #Criação dinamica dos botões
-        for texto, nome_tela in botoes:
-            btn = Button(
-                text = texto,
-                size_hint=(1, 0.2),
-                font_size=20
-            )
-            btn.bind(
-                on_press=lambda instance,
-                t=nome_tela: self.mudartela(t)
-            )
-            layout.add_widget(btn)
-        self.add_widget(btn)
+        self.add_widget(layout)
 
-    def mudar_tela(self, nome_tela):
-        """Alterna para a tela desejada"""
+    def adicionar_livros(self, instance):
+        """Função para mudar para a tela adicionar livros"""
 
-        self.manager.current = nome_tela
+        self.manager.current = "tela_adicionar"
