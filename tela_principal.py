@@ -29,6 +29,10 @@ class TelaPrincipal(Screen):
         btn_adicionar.bind(on_press=self.emprestar_livros)
         layout.add_widget(btn_emprestar)
 
+        btn_devolver = Button(text="Devolver", size_hint=(0, 0.2), font_size=20)
+        btn_adicionar.bind(on_press=self.devolver_livros)
+        layout.add_widget(btn_devolver)
+
         self.add_widget(layout)
 
     def adicionar_livros(self, instance):
@@ -39,3 +43,9 @@ class TelaPrincipal(Screen):
     def emprestar_livros(self, instance):
 
         self.manager.current = "tela_emprestar"
+
+    def devolver_livros(self, instance):
+
+        self.manager.current = "tela_devolver"
+
+    
