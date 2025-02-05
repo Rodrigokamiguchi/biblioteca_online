@@ -24,6 +24,10 @@ class TelaPrincipal(Screen):
         btn_adicionar = Button(text="Adicionar Livro", size_hint=(0, 0.2), font_size=20)
         btn_adicionar.bind(on_press=self.adicionar_livros)
         layout.add_widget(btn_adicionar)
+        
+        btn_emprestar = Button(text="Emprestar", size_hint=(0, 0.2), font_size=20)
+        btn_adicionar.bind(on_press=self.emprestar_livros)
+        layout.add_widget(btn_emprestar)
 
         self.add_widget(layout)
 
@@ -31,3 +35,7 @@ class TelaPrincipal(Screen):
         """Função para mudar para a tela adicionar livros"""
 
         self.manager.current = "tela_adicionar"
+
+    def emprestar_livros(self, instance):
+
+        self.manager.current = "tela_emprestar"
