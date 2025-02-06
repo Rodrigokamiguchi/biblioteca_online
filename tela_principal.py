@@ -37,9 +37,9 @@ class TelaPrincipal(Screen):
         btn_adicionar.bind(on_press=self.detalhes_livros)
         layout.add_widget(btn_detalhes)
 
-        btn_remover = Button(text="Remover", size_hint=(0, 0.2), font_size=20)
-        btn_adicionar.bind(on_press=self.remover_livros)
-        layout.add_widget(btn_remover)
+        btn_editar = Button(text="Remover", size_hint=(0, 0.2), font_size=20)
+        btn_adicionar.bind(on_press=self.editar_livros)
+        layout.add_widget(btn_editar)
 
         self.add_widget(layout)
 
@@ -60,8 +60,8 @@ class TelaPrincipal(Screen):
 
         self.manager.current = "tela_detalhes"
     
-    def remover_livros(self, instance):
+    def editar_livros(self, instance):
 
-        self.manager.current = "tela_remover"
+        self.manager.current = "tela_editar"
 
     

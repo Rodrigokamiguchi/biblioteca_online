@@ -4,7 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 
 class TelaDetahes(Screen):
-    def __init__(self, livros=None, **kwargs):
+    def __init__(self, livro=None, **kwargs):
         super().__init__(**kwargs)
 
         self.livro = livro or {} # Dicionario contendo os detalhes do livro
@@ -17,8 +17,8 @@ class TelaDetahes(Screen):
         self.label_status = Label(text=f"Status: {self.livro.get("Status", "Desconhecido")}")
 
         self.layout.add_widget(self.label_titulo)
-        self.layout.add_widget(self.label_titulo)
-        self.layout.add_widget(self.label_titulo)
+        self.layout.add_widget(self.label_autor)
+        self.layout.add_widget(self.label_status)
 
         # Se o livro estiver emprestado
         if self.livro.get("status") == "Emprestado":
@@ -27,9 +27,9 @@ class TelaDetahes(Screen):
 
          #Botão para volta
         btn_voltar = Button(text="Voltar", size_hint=(1, 0.2), font_size=20, on_press=self.voltar_tela)
-        layout.add_widget(btn_voltar)
+        self.layout.add_widget(btn_voltar)
 
-        self.add_widget(layout)
+        self.add_widget(self.layout)
 
     def voltar_tela(self, instance):
         """Retorna a tela principal"""
