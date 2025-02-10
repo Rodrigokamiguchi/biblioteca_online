@@ -1,107 +1,138 @@
 import psycopg2
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.label import Label
+from kivy.uix.screenmanager import Screen
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 
 class TelaEditar(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.layout = BoxLayout(orientation="vertical", padding=10, spacing=10)
 
-        # Campo de busca
-        self.input_busca = TextInput(hint_text='Digite o título ou ID do livro')
-        btn_buscar = Button(text='Buscar Livro', on_press=self.buscar_livro)
+        # Campo para buscar livro por ID
+        self.input_id = TextInput(hint_text="Digite o ID do Livro para Editar ou Remover")
+        btn_buscar = Button(text="Buscar", on_press=self.buscar_livro)
 
-        # Campos editáveis
-        self.input_titulo = TextInput(hint_text='Título do Livro')
-        self.input_autor = TextInput(hint_text='Autor')
-        self.input_status = TextInput(hint_text='Status (Disponível/Emprestado)')
-        
+        # Campos de edição
+        self.input_titulo = TextInput(hint_text="Novo Título")
+        self.input_status = TextInput(hint_text="Novo Status (Disponível/Emprestado)")
+
         # Botões
-        btn_salvar = Button(text='Salvar Alterações', on_press=self.salvar_alteracoes)
-        btn_voltar = Button(text="Voltar", size_hint=(1, 0.2), font_size=20, on_press=self.voltar_tela)
-        
+        btn_salvar = Button(text="Salvar Alterações", on_press=self.atualizar_livro)
+        btn_remover = Button(text="Remover Livro", on_press=self.remover_livro)
+        btn_voltar = Button(text="Voltar", on_press=lambda x: self.manager.current == "tela_principal")
+
         # Adicionando widgets ao layout
         self.layout.add_widget(Label(text="Editar Livro", font_size=20))
         self.layout.add_widget(self.input_id)
         self.layout.add_widget(btn_buscar)
         self.layout.add_widget(self.input_titulo)
-        self.layout.add_widget(self.input_autor)
-        self.layout.add_widget(self.input_ano)
+        self.layout.add_widget(self.input_status)
         self.layout.add_widget(btn_salvar)
+        self.layout.add_widget(btn_remover)
         self.layout.add_widget(btn_voltar)
-
 
         self.add_widget(self.layout)
 
     def buscar_livro(self, instance):
-        livro_id = self.input_id.text
+        """Busca um livro pelo ID e preenche os campos."""
+        livro_id = self.input_id.text.strip()
+        if not livro_id.isdigit():
+            self.mostrar_popup("Erro", "ID inválido!")
+            return
 
-        if livro_id:
-            try:
-                conn = psycopg2.connect(
-                    dbname = "biblioteca",
-                    user = "postgres",
-                    password = "123",
-                    host = "localhost",
-                    port = "5432"
-                )
-                cursor = conn.cursor()
+        try:
+            conn = psycopg2.connect(
+                dbname="biblioteca",
+                user="postegres",
+                password="123",
+                host="localhost",
+                port="5432"
+            )
+            cursor = conn.cursor()
+            cursor.execute("SELECT titulo, status FROM livros WHERE id = %s", (livro_id,))
+            livro = cursor.fetchone()
+            cursor.close()
+            conn.close()
 
-                cursor.execute("SELECT titulo, autor, ano, FROM livros WHERE id = %s", (livro_id,))
-                livro = cursor.fetchone()
+            if livro:
+                self.input_titulo.text = livro[0]
+                self.input_status.text = livro[1]
+            else:
+                self.mostrar_popup("Erro", "Livro não encontrado!")
 
-                cursor.close()
-                conn.close()
+        except Exception as e:
+            print("Erro ao buscar livro:", e)
 
-                if livro:
-                    self.input_titulo.text = livro[0]
-                    self.input_autor.text = livro[1]
-                    self.input_ano.text = str(livro[2])
-                else:
-                    print("Livro não encontrado")
-            except Exception as e:
-                print("Erro ao buscar livro:", e)
+    def atualizar_livro(self, instance):
+        """Atualiza as informações do livro no banco de dados."""
+        livro_id = self.input_id.text.strip()
+        novo_titulo = self.input_titulo.text.strip()
+        novo_status = self.input_status.text.strip()
 
+        if not livro_id.isdigit() or not novo_titulo or not novo_status:
+            self.mostrar_popup("Erro", "Preencha todos os campos!")
+            return
 
-    def salvar_alteracoes(self, instance):
-        livro_id = self.input_id.text
-        titulo = self.input_titulo.text
-        autor = self.input_autor.text
-        ano = self.input_ano.text
+        try:
+            conn = psycopg2.connect(
+                dbname="biblioteca",
+                user="seu_usuario",
+                password="sua_senha",
+                host="localhost",
+                port="5432"
+            )
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE livros SET titulo = %s, status = %s WHERE id = %s",
+                (novo_titulo, novo_status, livro_id)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+            self.mostrar_popup("Sucesso", "Livro atualizado com sucesso!")
 
-        if livro_id and titulo and autor and ano:
-            try:
-                conn = psycopg2.connect(
-                    dbname = "biblioteca",
-                    user = "postgres",
-                    password = "123",
-                    host = "localhost",
-                    port = "5432"
-                )
-                cursor = conn.cursor()
-                cursor.execute(
-                    "UPDATE livros SET titulo = %s, ano = %s, WHERE id = %s",
-                    (titulo, autor, ano, livro_id)
-                )
-                conn.commit()
-                
-                cursor.close
-                conn.close()
+        except Exception as e:
+            print("Erro ao atualizar livro:", e)
 
-                print("Livro Autualizado com sucesso!!!")
-                self.input_id.text = ""
-                self.input_titulo.text = ""
-                self.input_autor.text = ""
-                self.input_ano.text = ""
-            except Exception as e:
-                print("Erro ao atualizar o livro: ", e)
-        else:
-            print("Preencha todos os campos!!!")
+    def remover_livro(self, instance):
+        """Remove um livro do banco de dados."""
+        livro_id = self.input_id.text.strip()
+        if not livro_id.isdigit():
+            self.mostrar_popup("Erro", "ID inválido!")
+            return
 
-    def voltar_tela(self, instance):
-        """Retorna a tela principal"""
+        try:
+            conn = psycopg2.connect(
+                dbname="biblioteca",
+                user="seu_usuario",
+                password="sua_senha",
+                host="localhost",
+                port="5432"
+            )
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM livros WHERE id = %s", (livro_id,))
+            conn.commit()
+            cursor.close()
+            conn.close()
 
-        self.manager.current = "tela_principal"
+            self.input_id.text = ""
+            self.input_titulo.text = ""
+            self.input_status.text = ""
+            self.mostrar_popup("Sucesso", "Livro removido com sucesso!")
+
+        except Exception as e:
+            print("Erro ao remover livro:", e)
+
+    def mostrar_popup(self, titulo, mensagem):
+        """Exibe um popup na tela."""
+        popup_layout = BoxLayout(orientation="vertical", padding=10, spacing=10)
+        popup_layout.add_widget(Label(text=mensagem))
+        btn_fechar = Button(text="Fechar", size_hint=(None, None), size=(100, 40))
+        popup_layout.add_widget(btn_fechar)
+
+        popup = Popup(title=titulo, content=popup_layout, size_hint=(None, None), size=(300, 200))
+        btn_fechar.bind(on_press=popup.dismiss)
+        popup.open()

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 DATABASE_CONFIG = {
     'dbname': 'biblioteca',
     'user': 'postegres',
-    'password': 'sua_senha',
+    'password': '123',
     'host': 'localhost',
     'port': '5432'
 }
