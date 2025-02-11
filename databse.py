@@ -82,6 +82,35 @@ def criar_tabela_funcionarios():
             print(f"Erro ao criar a tabela de funcionários: {e}")
         finally:
             conexao.close()
+
+def obter_usuarios():
+    conexao = conectar()
+    
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.execute("""
+                SELECT id, nome, multa FROM usuarios;
+            """)
+            usuarios = cursor.fetchall()
+            cursor.close()
+            return [{"id": usuario[0], "nome": usuario[1], "multa": float(usuario[2])} for usuario in usuarios]
+        finally:
+            conexao.close()
+    return []
+
+def pagar_multa(usuario_id):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.execute("""
+                UPDATE usuarios SET multa = 0 WHERE id = %s;
+            """, (usuario_id,))
+            conexao.commit()
+            cursor.close()
+        finally:
+            conexao.close()
     
 # Chama a função para criar a tabela
 criar_tabela_livros()
