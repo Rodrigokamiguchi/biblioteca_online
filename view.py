@@ -35,6 +35,14 @@ def insert_users(nome, sobrenome, endereco, email, telefone):
     finally:
         con.close()
 
+# Função para exbir usuarios
+def get_users():
+    con = connect()
+    c = con.cursor()
+    c.execute("SELECT * FROM usuarios")
+    users = c.fetchall()
+    con.close()
+    return users
 
 # Função para exibir os livros
 def exibir_livros():
