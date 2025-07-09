@@ -49,53 +49,41 @@ def exibir_livros():
     con = connect()
     livros = con.execute("SELECT * FROM livros").fetchall()
     con.close()
-    
-    if not livros:
-        print("Nenhum livro encontrado na biblioteca.")
-        return
-    
-    print("livros na biblioteca: ")
-    for livro in livros:
-        print(f"ID: {livro[0]}")
-        print(f"TITLE: {livro[1]}")
-        print(f"AUTOR: {livro[2]}")
-        print(f"EDITORA: {livro[3]}")
-        print(f"ANO_PUBLICADO: {livro[4]}")
-        print(f"ISBN: {livro[5]}")
-        print("\n")
-
+    return livros
 # Função para realizar emprestiimos
 def insert_loan(id_livro, id_usuario, data_emprestimo, data_devolucao):
-    try:
         con = connect()
         con.execute("INSERT INTO emprestimos(id_livro, id_usuario, data_emprestimo, data_devolucao)\
                     VALUES(?, ?, ?, ?)",(id_livro, id_usuario, data_emprestimo, data_devolucao))
         
         con.commit()
-        print("status do livro atualizado")
-    except sqlite3.Error as erro:
-        print("não foi possivel atualizar o status do livro", erro)
-    finally:
         con.close()
 
 # Função para exibir todos os livros emprestado no momento
 def get_books_on_load():
     con = connect()
     result = con.execute("""
-        SELECT livros.title, usuarios.nome, usuarios.sobrenome, emprestimos.id, emprestimos.data_emprestimo, emprestimos.data_devolucao
-        FROM emprestimos
-        INNER JOIN livros ON livros.id = emprestimos.id_livro
+        SELECT 
+            emprestimos.id,
+            livros.title,
+            usuarios.nome,
+            usuarios.sobrenome,
+            emprestimos.data_emprestimo,
+            emprestimos.data_devolucao
+        FROM livros
+        INNER JOIN emprestimos ON livros.id = emprestimos.id_livro
         INNER JOIN usuarios ON usuarios.id = emprestimos.id_usuario
         WHERE emprestimos.data_devolucao IS NULL
     """).fetchall()
-    
     con.close()
     return result
+
+
 
 # Função para a atualizar a data de devolução de emprestimo
 def update_loan_return_date(id_emprestimo, data_devolucao):
     con = connect()
-    con.execute("UPDATE emprestimos SET data_devolucao = ? WHERE id = ?",(id_emprestimo, data_devolucao))
+    con.execute("UPDATE emprestimos SET data_devolucao = ? WHERE id = ?",(data_devolucao, id_emprestimo))
     con.commit()
     con.close()
 
@@ -108,6 +96,6 @@ def update_loan_return_date(id_emprestimo, data_devolucao):
 #insert_users("Guilherme", "Kamiguchi", "Aguas claras", "rodrigo@gmail.com", "61996945622")
 #insert_loan(1, 1, "12/05/2025", None)
 #exibir_livros()
-livros_emprestado = get_books_on_load()
-print(livros_emprestado)
-update_loan_return_date(1, "23/05/2025")
+# livros_emprestado = get_books_on_load()
+# print(livros_emprestado)
+# update_loan_return_date(1, "23/05/2025")
