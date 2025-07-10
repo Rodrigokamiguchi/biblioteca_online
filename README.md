@@ -13,7 +13,6 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
 - 📋 Exibição de todos os **livros e usuários cadastrados**
 - 💾 Dados salvos em banco de dados local com **SQLite3**
 - 🖥 Interface gráfica amigável com **Tkinter**
-- 📤 Exportação fácil e manipulação futura com `pandas` (caso deseje evoluir)
 
 ---
 
