@@ -38,18 +38,16 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    ```bash
    git clone https://github.com/seu-usuario/nome-do-repositorio.git
    cd nome-do-repositorio
+   
    Instale o Pillow (caso ainda não tenha):
    pip install pillow
-
-   Execute o script principal:
    
+   Execute o script principal:
    python tela.py
 ---
 
 ## 📂 Estrutura do projeto
-   bash
-   Copiar
-   Editar
+   ```bash
    📁 sistema-biblioteca
    ├── tela.py            # Interface gráfica (Tkinter)
    ├── view.py            # Funções de banco de dados e lógica
