@@ -64,10 +64,9 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    ├── dados.db           # (gerado automaticamente após rodar)
 
 ---
+**Rodrigo Guilherme Kamiguchi Braga**  
+📧 rodrigokamiguchi@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/kamiguchi/)  
+📷 [Instagram](https://www.instagram.com/rodrigo_kamiguchi_braga/)  
+📞 [WhatsApp](https://wa.me/5561996945622?text=Olá)
 
-## 👨‍💻 Autor
-   Rodrigo Guilherme Kamiguchi Braga
-   📧 rodrigokamiguchi@gmail.com
-   🔗 LinkedIn
-   📷 Instagram
-   📞 WhatsApp
