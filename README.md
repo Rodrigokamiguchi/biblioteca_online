@@ -38,3 +38,36 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    ```bash
    git clone https://github.com/seu-usuario/nome-do-repositorio.git
    cd nome-do-repositorio
+   Instale o Pillow (caso ainda não tenha):
+   pip install pillow
+
+   Execute o script principal:
+   
+   python tela.py
+---
+
+## 📂 Estrutura do projeto
+   bash
+   Copiar
+   Editar
+   📁 sistema-biblioteca
+   ├── tela.py            # Interface gráfica (Tkinter)
+   ├── view.py            # Funções de banco de dados e lógica
+   ├── dados.py           # Criação das tabelas no SQLite
+   ├── salvar.png         # Ícones usados nos botões
+   ├── adicionar.png
+   ├── pessoa.png
+   ├── livros.png
+   ├── emprestado.png
+   ├── devolver.png
+   ├── logo.png
+   ├── dados.db           # (gerado automaticamente após rodar)
+
+---
+
+## 👨‍💻 Autor
+   Rodrigo Guilherme Kamiguchi Braga
+   📧 rodrigokamiguchi@gmail.com
+   🔗 LinkedIn
+   📷 Instagram
+   📞 WhatsApp
