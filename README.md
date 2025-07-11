@@ -47,7 +47,7 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
 ---
 
 ## 📂 Estrutura do projeto
-   ```bash
+   ```
    📁 sistema-biblioteca
    ├── tela.py            # Interface gráfica (Tkinter)
    ├── view.py            # Funções de banco de dados e lógica
@@ -60,7 +60,7 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    ├── devolver.png
    ├── logo.png
    ├── dados.db           # (gerado automaticamente após rodar)
-
+```
 ---
 **Rodrigo Guilherme Kamiguchi Braga**  
 📧 rodrigokamiguchi@gmail.com  
