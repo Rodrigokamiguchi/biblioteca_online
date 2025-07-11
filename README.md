@@ -39,10 +39,10 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    git clone https://github.com/seu-usuario/nome-do-repositorio.git
    cd nome-do-repositorio
    
-   Instale o Pillow (caso ainda não tenha):
+2. Instale as dependências necessárias:
    pip install pillow
    
-   Execute o script principal:
+3. Execute o aplicativo principal:
    python tela.py
 ---
 
