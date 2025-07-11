@@ -40,9 +40,11 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
    cd nome-do-repositorio
    
 2. Instale as dependências necessárias:
+   ```
    pip install pillow
    
-3. Execute o aplicativo principal:
+4. Execute o aplicativo principal:
+   ```
    python tela.py
 ---
 
