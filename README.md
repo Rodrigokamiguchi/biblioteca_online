@@ -36,12 +36,12 @@ Este projeto é um sistema completo de gerenciamento de biblioteca, desenvolvido
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
-   cd nome-do-repositorio
+   git clone https://github.com/Rodrigokamiguchi/biblioteca_online.git
+   cd bibliote_online
    
 2. Instale as dependências necessárias:
    ```
-   pip install pillow
+   pip install -r requirements.txt
    
 4. Execute o aplicativo principal:
    ```
