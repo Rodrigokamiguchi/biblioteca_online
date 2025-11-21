@@ -622,7 +622,6 @@ make_side_button("🔁  Emprestar", tela_emprestimo)
 make_side_button("📦  Devolução", tela_devolucao)
 make_side_button("📖  Ver Empréstimos", tela_ver_emprestimos)
 make_side_button("⏰  Atrasos", verificar_atrasos)
-make_side_button("📄  Gerar Relatório (por usuário)", lambda: tela_ver_usuarios())
 
 # inicializa na tela inicial
 tela_inicio()
